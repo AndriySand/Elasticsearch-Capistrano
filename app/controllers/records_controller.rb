@@ -1,4 +1,5 @@
 class RecordsController < ApplicationController
+  require 'csv'
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
   # GET /records
@@ -59,6 +60,18 @@ class RecordsController < ApplicationController
       format.html { redirect_to records_url, notice: 'Record was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import_data
+    CSV.foreach(params[:file].path, headers:true) do |row|
+      Record.create! row.to_hash
+    end
+    redirect_to records_url
+  end
+
+  def select_records
+    @records = Record.where('klass = ?', params[:klass])
+    @records.each{|rec| rec.value = rec.formatted_value}
   end
 
   private
