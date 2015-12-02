@@ -4,8 +4,16 @@ class RecordsController < ApplicationController
 
   # GET /records
   # GET /records.json
+  # def index
+  #   @records = Record.all
+  # end
+
   def index
-    @records = Record.all
+    if params[:query]
+      @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
+    else
+      @records = RecordsIndex.query(match_all: {} ).load
+    end
   end
 
   # GET /records/1
