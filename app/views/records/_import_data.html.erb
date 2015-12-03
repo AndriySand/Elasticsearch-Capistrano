@@ -14,4 +14,4 @@
 
 <% end %>
 
-<%= select_tag(:records, options_for_select(@records.map{|rec| rec.klass}.uniq)) %>
+<%= select_tag(:records, options_for_select(@records.pluck(:klass).uniq)) %>
