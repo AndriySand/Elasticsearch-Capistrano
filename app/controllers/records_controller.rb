@@ -6,7 +6,8 @@ class RecordsController < ApplicationController
     if params[:query]
       @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
     else
-      @records = Record.all
+      @records = Record.paginate(page: params[:page], per_page: 5)
+      render json: @records if request.format == 'json'
     end
   end
 
