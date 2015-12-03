@@ -6,3 +6,13 @@
 
 <%= link_to 'New Record', new_record_path %>
 <%= render 'import_data' %>
+
+<%= form_tag :records, method: :get, multipart: true do %>
+  <h3>Select records</h3>
+
+  <div class="large-11">
+    <%= text_field_tag :query %>
+    <%= submit_tag raw("Find values"), class: 'button small' %>
+  </div>
+
+<% end %>
