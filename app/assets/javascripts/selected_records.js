@@ -1,8 +1,7 @@
 $(function(){
 
   $('#records').bind('change', function(){
-    var klass = this.options[this.options.selectedIndex].value;
-    send_ajax('records/select_records', 'GET', {klass: klass})
+    send_ajax('records/select_records', 'GET', {klass: this.value})
   });
 
 });
