@@ -12,7 +12,7 @@ class RecordsController < ApplicationController
     if params[:query]
       @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
     else
-      @records = RecordsIndex.query(match_all: {} ).load
+      @records = Record.all
     end
   end
 
@@ -79,7 +79,6 @@ class RecordsController < ApplicationController
 
   def select_records
     @records = Record.where('klass = ?', params[:klass])
-    @records.each{|rec| rec.value = rec.formatted_value}
   end
 
   private
