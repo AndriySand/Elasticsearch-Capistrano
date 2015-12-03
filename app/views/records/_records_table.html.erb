@@ -11,7 +11,7 @@
     <% @records.each do |record| %>
       <tr>
         <td><%= record.klass %></td>
-        <td><%= record.value %></td>
+        <td><%= record.formatted_value %></td>
         <td><%= link_to 'Show', record %></td>
         <td><%= link_to 'Edit', edit_record_path(record) %></td>
         <td><%= link_to 'Destroy', record, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -19,13 +19,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= form_tag :records, method: :get, multipart: true do %>
-  <h3>Select records</h3>
-
-  <div class="large-11">
-    <%= text_field_tag :query %>
-    <%= submit_tag raw("Find values"), class: 'button small' %>
-  </div>
-
-<% end %>
