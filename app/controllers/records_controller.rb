@@ -2,12 +2,6 @@ class RecordsController < ApplicationController
   require 'csv'
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
-  # GET /records
-  # GET /records.json
-  # def index
-  #   @records = Record.all
-  # end
-
   def index
     if params[:query]
       @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
@@ -71,9 +65,12 @@ class RecordsController < ApplicationController
   end
 
   def import_data
-    CSV.foreach(params[:file].path, headers:true) do |row|
+    number_of_records = 0
+    CSV.foreach(params[:file].path, headers: true) do |row|
       Record.create! row.to_hash
+      number_of_records += 1
     end
+    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
     redirect_to records_url
   end
 
