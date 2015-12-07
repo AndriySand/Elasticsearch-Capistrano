@@ -1,0 +1,17 @@
+<%= form_tag :import_data_records, multipart: true do %>
+  <h3>Import data from file</h3>
+
+  <div class="large-11">
+    <label>
+      File
+      <%= file_field_tag :file %>
+    </label>
+  </div>
+
+  <div class="large-11">
+    <%= submit_tag raw("&rarr; Import"), class: 'button small' %>
+  </div>
+
+<% end %>
+
+<%= select_tag(:records, options_for_select(@records.pluck(:klass).uniq)) %>

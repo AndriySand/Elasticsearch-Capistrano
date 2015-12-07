@@ -1,10 +1,14 @@
 class RecordsController < ApplicationController
+  require 'csv'
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
-  # GET /records
-  # GET /records.json
   def index
-    @records = Record.all
+    if params[:query]
+      @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
+    else
+      @records = Record.paginate(page: params[:page], per_page: 5)
+      render json: @records if request.format == 'json'
+    end
   end
 
   # GET /records/1
@@ -59,6 +63,20 @@ class RecordsController < ApplicationController
       format.html { redirect_to records_url, notice: 'Record was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def import_data
+    number_of_records = 0
+    CSV.foreach(params[:file].path, headers: true) do |row|
+      Record.create! row.to_hash
+      number_of_records += 1
+    end
+    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
+    redirect_to records_url
+  end
+
+  def select_records
+    @records = Record.where('klass = ?', params[:klass])
   end
 
   private
