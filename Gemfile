@@ -17,6 +17,12 @@ gem 'chewy'
 gem 'elasticsearch'
 gem 'will_paginate', '~> 3.0.6'
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rvm'
+end
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
