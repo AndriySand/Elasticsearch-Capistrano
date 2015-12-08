@@ -64,6 +64,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    daemon_controller (1.2.0)
     debug_inspector (0.0.2)
     elasticsearch (1.0.14)
       elasticsearch-api (= 1.0.14)
@@ -102,6 +103,10 @@ GEM
     net-ssh (3.0.1)
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
+    passenger (4.0.56)
+      daemon_controller (>= 1.2.0)
+      rack
+      rake (>= 0.8.1)
     pg (0.15.1)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -184,6 +189,7 @@ DEPENDENCIES
   elasticsearch
   jbuilder (~> 2.0)
   jquery-rails
+  passenger
   pg (= 0.15.1)
   rails (= 4.2.4)
   sass-rails (~> 5.0)

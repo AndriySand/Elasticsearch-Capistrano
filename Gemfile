@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'chewy'
 gem 'elasticsearch'
 gem 'will_paginate', '~> 3.0.6'
+gem 'passenger'
 
 group :development do
   gem 'capistrano'
