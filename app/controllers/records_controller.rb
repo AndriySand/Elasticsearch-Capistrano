@@ -3,8 +3,9 @@ class RecordsController < ApplicationController
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
   def index
+    @record_klasses = Record.all.pluck(:klass).uniq
     if params[:query]
-      @records = RecordsIndex.query(query_string: {query: params[:query] } ).load
+      @records = RecordsIndex.query(query_string: {query: params[:query] } ).paginate(page: params[:page], per_page: 5).load
     else
       @records = Record.paginate(page: params[:page], per_page: 5)
       render json: @records if request.format == 'json'
@@ -71,12 +72,12 @@ class RecordsController < ApplicationController
       Record.create! row.to_hash
       number_of_records += 1
     end
-#    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
+    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
     redirect_to records_url
   end
 
   def select_records
-    @records = Record.where('klass = ?', params[:klass])
+    @records = Record.where('klass = ?', params[:klass]).paginate(page: params[:page], per_page: 5)
   end
 
   private
