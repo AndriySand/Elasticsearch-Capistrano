@@ -71,7 +71,7 @@ class RecordsController < ApplicationController
       Record.create! row.to_hash
       number_of_records += 1
     end
-    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
+#    UserMailer.welcome_email('admin@inbox.ru', number_of_records).deliver_now
     redirect_to records_url
   end
 
